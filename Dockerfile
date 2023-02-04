@@ -17,12 +17,9 @@ RUN apt -y install npm
 RUN apt -y install snapd
 RUN npm install --unsafe-perm=true
 RUN systemctl unmask snapd.service
-RUN systemctl start snapd
-RUN snap install chromium
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
-
-CMD [ "npm", "run", "start" ]
+CMD "systemctl start snapd && snap install chromium && npm run start"
