@@ -56,39 +56,37 @@ const getDalleResponse = async (clientText) => {
 }
 
 const commands = (client, message) => {
+    if (message.from === process.env.BOT_NUMBER) return;
+
     const iaCommands = {
-        dalle: "/mid"
+        dalle: "/img"
     }
 
     let firstWord = message.text.substring(0, message.text.indexOf(" "));
 
-    if (firstWord == iaCommands.dalle) {
-        const imgDescription = message.text.substring(message.text.indexOf(" "));
-        getDalleResponse(imgDescription, message).then((imgUrl) => {
-            client.sendImage(
-                message.from === process.env.PHONE_NUMBER ? message.to : message.from,
-                imgUrl,
-                imgDescription,
-                'Imagem gerada pela IA DALL-E 🤖'
-            )
-        })
+    if (message.text.substring(0, 1) === "/") {
+        switch (firstWord) {
+            case iaCommands.dalle:
+                const imgDescription = message.text.substring(message.text.indexOf(" "));
+                getDalleResponse(imgDescription, message).then((imgUrl) => {
+                    client.sendImage(
+                        message.from === process.env.PHONE_NUMBER ? message.to : message.from,
+                        imgUrl,
+                        imgDescription,
+                        'Imagem gerada pela IA DALL-E'
+                    )
+                })
+                break;
+
+            default:
+                client.sendText(message.from, "Comando não reconhecido!")
+                break;
+        }
     } else {
         getDavinciResponse(message.text).then((response) => {
-            /*
-             * Faremos uma validação no message.from
-             * para caso a gente envie um comando
-             * a response não seja enviada para
-             * nosso próprio número e sim para 
-             * a pessoa ou grupo para o qual eu enviei
-             */
-
-            if (message.from === process.env.BOT_NUMBER) return;
-
             client.sendText(message.from, response)
         })
     }
-
-
 }
 
 async function start(client) {
