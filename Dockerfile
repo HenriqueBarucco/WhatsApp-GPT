@@ -15,11 +15,11 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt -y install nodejs
 RUN apt -y install npm
 
-RUN npm install
+RUN npm install --unsafe-perm=true
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
-CMD [ "node", "." ]
+CMD [ "npm", "run", "start" ]
