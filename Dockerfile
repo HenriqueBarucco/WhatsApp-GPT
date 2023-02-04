@@ -16,7 +16,7 @@ RUN apt -y install nodejs
 RUN apt -y install npm
 RUN apt -y install snapd
 RUN npm install --unsafe-perm=true
-RUN apt -y install chromium
+RUN apt install -y chromium-browser
 # If you are building your code for production
 # RUN npm ci --only=production
 
