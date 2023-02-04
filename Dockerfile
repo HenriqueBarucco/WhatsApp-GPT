@@ -14,7 +14,7 @@ RUN apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt -y install nodejs
 RUN apt -y install npm
-
+RUN apt -y install snapd
 RUN npm install --unsafe-perm=true
 RUN snap install chromium
 # If you are building your code for production
